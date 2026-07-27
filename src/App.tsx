@@ -119,4 +119,7 @@ function App() {
   )
 }
 
+console.log(`This is how react renders the function component`, App)
+console.log("rendering")
+
 export default App

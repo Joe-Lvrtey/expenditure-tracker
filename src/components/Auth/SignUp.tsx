@@ -1,6 +1,6 @@
 export const SignUp = () => {
     return (
 
-        <div></div>
+        <div className="bg-red"></div>
     )
 }

@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+body {
+  font-family: "Barlow", sans-serif;
+  font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+li {
+  font-family: "Barlow Condensed", sans-serif;
+  font-style: normal;
+}

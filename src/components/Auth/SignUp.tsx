@@ -1,6 +1,11 @@
+import Brands from "./Brands"
+import AuthForm from "./AuthForm"
+
 export const SignUp = () => {
     return (
-
-        <div></div>
+        <section>
+            <Brands />
+            <AuthForm />
+        </section>
     )
 }

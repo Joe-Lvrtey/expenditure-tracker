@@ -7,7 +7,7 @@ const SignIn = () => {
             <Brands />
             <div className="bg-[#1d1f20] h-full w-full items-center">
                 <div className="flex justify-center items-center h-screen">
-                    <AuthForm />
+                    <AuthForm mode="sign-in" />
                 </div>
             </div>
         </div>

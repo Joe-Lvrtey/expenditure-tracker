@@ -6,16 +6,16 @@ type AuthFormProp = {
 
 const AuthForm: React.FC<AuthFormProp> = ({ mode }) => {
     return (
-        <section className="p-8 md:p-y-12 px-20 border border-gray-200">
+        <section className="p-5.5 md:p-y-12 md:px-20 border border-gray-200">
             <header>
                 <span className="tracking-wider text-[#7fa8ce] text-xl md:text-2xl">{mode === "sign-in" ? "Welcome back" : "Welcome"}</span>
-                <h2 className="text-white text-lg md:text-3xl py-4">{mode === "" ? "Sign in" : "Sign Up"}</h2>
+                <h2 className="text-white text-xl md:text-3xl py-4">{mode === "sign-in" ? "Sign in" : "Sign Up"}</h2>
             </header>
             <form>
                 <InputField type="email" onChange={() => { }} label="Email" />
                 <InputField type="email" onChange={() => { }} label="Password" />
                 {mode === "sign-up" &&
-                    <div className="my-2">
+                    <div className="my-4">
                         <InputField type="password" onChange={() => { }} label="Confirm Password" /></div>}
                 {mode === "sign-in" &&
                     <div className="flex items-center justify-between my-4">

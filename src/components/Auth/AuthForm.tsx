@@ -1,4 +1,8 @@
 import InputField from "./InputField"
+import * as z from "zod"
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 
 type AuthMode = "sign-in" | "sign-up"
 
@@ -7,6 +11,17 @@ type AuthFormProp = {
 }
 
 const AuthForm: React.FC<AuthFormProp> = ({ mode }) => {
+
+    const schema = z.object({
+        email: z.string().email(),
+        password: z.string().min(8),
+        confirmPassword: z.string().min(8)
+    }).refine((data) => data.password === data.confirmPassword, {
+        message: "passwords do not much",
+        path: ["confirm Password"]
+    })
+
+    const { register, handleSubmit } = useForm({ resolver: zodResolver(schema) })
 
     const isSignIn = mode === "sign-in"
 
@@ -18,11 +33,12 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode }) => {
             </header>
             <form>
                 <InputField type="email" onChange={() => { }} label="Email" />
-                <InputField type="email" onChange={() => { }} label="Password" />
-                {mode === "sign-up" &&
+                <InputField type="password" onChange={() => { }} label="Password" />
+                {!isSignIn &&
                     <div className="my-4">
-                        <InputField type="password" onChange={() => { }} label="Confirm Password" /></div>}
-                {mode === "sign-in" &&
+                        <InputField type="password" onChange={() => { }} label="Confirm Password" />
+                    </div>}
+                {isSignIn &&
                     <div className="flex items-center justify-between my-4">
                         <div className="flex items-center gap-2">
                             <input type="radio" className="w-5 h-5 appearance-none border-2 border-gray-300 rounded-full focus:outline p-2" />

@@ -1,12 +1,9 @@
-
-
 type InputFieldProps = {
     type: string,
     label: string,
     value?: string,
-    onChange: (value: string) => void
+    onChange: (e: any) => void
 }
-
 
 const InputField: React.FC<InputFieldProps> = ({
     type,

@@ -47,18 +47,8 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode }) => {
                 <h2 className="text-white text-xl md:text-3xl py-4">{isSignIn ? "Sign in" : "Sign Up"}</h2>
             </header>
             <form onSubmit={handleSubmit(submitFormData)}>
-                {/* <InputField {...(register("email"))} type="email" onChange={(e: React.ChangeEventHandler<HTMLInputElement>) => { e.preventDefault() }} label="Email" />
-                <InputField {...(register("password"))} type="password" onChange={() => { }} label="Password" /> */}
-                <div className="flex flex-col">
-                    <label className="text-gray-300 text-small tracking-wide leading-0.5 my-4">email</label>
-                    <input
-                        {...(register("email"))}
-                        className="w-65  md:w-100 py-4 px-6 border-2 border-gray-300 text-gray-200 outline-none focus:outline-2"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    ></input>
-                </div>
+                <InputField {...(register("email"))} type="email" onChange={(e: React.ChangeEventHandler<HTMLInputElement>) => { }} label="Email" />
+                <InputField {...(register("password"))} type="password" onChange={() => { }} label="Password" />
                 <div className="flex flex-col">
                     <label className="text-gray-300 text-small tracking-wide leading-0.5 my-4">password</label>
                     <input
@@ -69,20 +59,9 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode }) => {
                         onChange={(e) => setPassword(e.target.value)}
                     ></input>
                 </div>
-                {/* {!isSignIn &&
+                {!isSignIn &&
                     <div className="my-4">
                         <InputField {...(register("confirmPassword"))} type="password" onChange={() => { }} label="Confirm Password" />
-                    </div>} */}
-                {!isSignIn &&
-                    <div className="flex flex-col">
-                        <label className="text-gray-300 text-small tracking-wide leading-0.5 my-4">confirm password</label>
-                        <input
-                            {...(register("email"))}
-                            className="w-65  md:w-100 py-4 px-6 border-2 border-gray-300 text-gray-200 outline-none focus:outline-2"
-                            type="password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                        ></input>
                     </div>}
                 {isSignIn &&
                     <div className="flex items-center justify-between my-4">

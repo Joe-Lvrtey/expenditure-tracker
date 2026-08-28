@@ -2,8 +2,6 @@ import InputField from "./InputField"
 import * as z from "zod"
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from "react"
-
 
 type AuthMode = "sign-in" | "sign-up"
 
@@ -14,25 +12,29 @@ type AuthFormProp = {
 type AuthFormData = {
     email: string,
     password: string,
-    confirmPassword: string
+    confirmPassword?: string
 }
 
 const AuthForm: React.FC<AuthFormProp> = ({ mode }) => {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-
-    const schema = z.object({
+    const signInschema = z.object({
         email: z.string().email(),
         password: z.string().min(8),
-        confirmPassword: z.string().min(8)
-    }).refine((data) => data.password === data.confirmPassword, {
-        message: "passwords do not much",
-        path: ["confirm Password"]
+        // confirmPassword: z.string().min(8)
     })
 
-    const { register, handleSubmit } = useForm({ resolver: zodResolver(schema) })
+    const signUpschema = z.object({
+        email: z.string().email(),
+        password: z.string().min(8),
+        confirmPassword: z.string().min(8).optional()
+    }).refine((data) => data.password === data.confirmPassword, {
+        message: "passwords do not much",
+        path: ["confirmPassword"]
+    })
+
+    const { register, handleSubmit } = useForm(mode === "sign-in" ? { resolver: zodResolver(signInschema) } : { resolver: zodResolver(signUpschema) })
+
+    console.log(register + " this is register")
 
     const isSignIn = mode === "sign-in"
 
@@ -46,22 +48,16 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode }) => {
                 <span className="tracking-wider text-[#7fa8ce] text-xl md:text-2xl">{isSignIn ? "Welcome back" : "Welcome"}</span>
                 <h2 className="text-white text-xl md:text-3xl py-4">{isSignIn ? "Sign in" : "Sign Up"}</h2>
             </header>
-            <form onSubmit={handleSubmit(submitFormData)}>
-                <InputField {...(register("email"))} type="email" onChange={(e: React.ChangeEventHandler<HTMLInputElement>) => { }} label="Email" />
-                <InputField {...(register("password"))} type="password" onChange={() => { }} label="Password" />
-                <div className="flex flex-col">
-                    <label className="text-gray-300 text-small tracking-wide leading-0.5 my-4">password</label>
-                    <input
-                        {...(register("email"))}
-                        className="w-65  md:w-100 py-4 px-6 border-2 border-gray-300 text-gray-200 outline-none focus:outline-2"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    ></input>
-                </div>
+            <form onSubmit={handleSubmit(submitFormData,
+                (errors) => {
+                    console.log("validation errors", errors)
+                }
+            )}>
+                <InputField {...register("email")} label="Email" type="email" />
+                <InputField {...register("password")} label="Password" type="password" />
                 {!isSignIn &&
                     <div className="my-4">
-                        <InputField {...(register("confirmPassword"))} type="password" onChange={() => { }} label="Confirm Password" />
+                        <InputField {...register("confirmPassword")} label="Confirm Password" type="password" />
                     </div>}
                 {isSignIn &&
                     <div className="flex items-center justify-between my-4">

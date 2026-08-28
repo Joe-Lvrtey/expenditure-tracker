@@ -1,14 +1,33 @@
 import { createFileRoute } from '@tanstack/react-router'
+import AppSidebar from "../pages/Dashboard/App-Dashboard"
+import SignUp from "../components/Auth/SignUp"
+import SignIn from "../components/Auth/SignIn"
+import pageMeta from "../lib/seo"
+import { company } from "../data/site"
+import Register from "../components/Auth/Register"
 
-export const Route = createFileRoute('/')({ component: Home })
+export const Route = createFileRoute('/')({
+  //   head: () => ({
+  //     meta: pageMeta({
+  //       title: company.name,
+  //       description: company.description
+  //     }),
+  //     component: Home
+  //   })
+  // })
+  head: () => ({
+    meta: pageMeta({
+      title: company.name,
+      description: company.description,
+    }),
+  }),
+  component: Home,
+})
 
 function Home() {
   return (
-    <div className="p-8">
-      <h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>
-      <p className="mt-4 text-lg">
-        Edit <code>src/routes/index.tsx</code> to get started.
-      </p>
-    </div>
+    <>
+      <Register mode="Sign-in" />
+    </>
   )
 }

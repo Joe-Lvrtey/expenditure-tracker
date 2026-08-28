@@ -27,7 +27,7 @@ export const Route = createFileRoute('/')({
 function Home() {
   return (
     <>
-      <Register mode="Sign-in" />
+      <Register mode="sign-in" />
     </>
   )
 }

@@ -1,20 +1,14 @@
 import Brands from "./Brands"
 import AuthForm from "./AuthForm"
 import { useState } from "react"
-
-
-type AuthMode = "sign-in" | "sign-up"
-
-type AuthFormProp = {
-    mode: AuthMode
-}
+import type { AuthFormProp } from "./auth-type"
 
 export default function Register({ mode }: AuthFormProp) {
 
     const [authMode, setAuthMode] = useState(mode)
 
     const toggleMode = () => {
-        setAuthMode("sign-up")
+        setAuthMode(prev => prev === "sign-in" ? "sign-up" : "sign-in")
     }
 
     return (
@@ -22,10 +16,7 @@ export default function Register({ mode }: AuthFormProp) {
             <Brands />
             <div className="bg-[#1d1f20] h-full w-full items-center">
                 <div className="flex justify-center items-center h-screen">
-                    {
-                        mode === "sign-in" ? <AuthForm mode="sign-in" /> : <AuthForm mode="sign-up" />
-                    }
-
+                    <AuthForm mode={authMode} onToggleMode={toggleMode} />
                 </div>
             </div>
         </div >

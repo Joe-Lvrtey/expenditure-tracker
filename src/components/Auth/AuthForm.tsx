@@ -2,12 +2,7 @@ import InputField from "./InputField"
 import * as z from "zod"
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-type AuthMode = "sign-in" | "sign-up"
-
-type AuthFormProp = {
-    mode: AuthMode
-}
+import type { AuthFormProp } from "./auth-type"
 
 type AuthFormData = {
     email: string,
@@ -15,7 +10,9 @@ type AuthFormData = {
     confirmPassword?: string
 }
 
-const AuthForm: React.FC<AuthFormProp> = ({ mode }) => {
+const AuthForm: React.FC<AuthFormProp> = ({ mode, onToggleMode }) => {
+
+    console.log("this is the toggler: ", onToggleMode)
 
     const signInschema = z.object({
         email: z.string().email(),
@@ -41,6 +38,7 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode }) => {
     const submitFormData = (data: AuthFormData) => {
         console.log("data", data)
     }
+
 
     return (
         <section className="p-5.5 md:p-y-12 md:px-20 border border-dashed lg:border-solid border-gray-200">
@@ -72,8 +70,19 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode }) => {
                     <button type="submit" className="leading-2 text-lg md:text-2xl cursor-pointer tracking-wider w-full bg-[#5d8dba] border py-6 px-8">{isSignIn ? "SIGN IN" : "SIGN UP"}</button>
                     <button className="leading-2 text-lg md:text-xl tracking-tight w-full border border-gray-300 text-white  py-6 px-8">Continue With Google</button>
                     <div className="flex justify-center items-center gap-2">
-                        <span className="text-gray-100 text-lg md:text-xl">{isSignIn ? "No Account?" : "Already Have An Account?"}</span>
-                        <span className="text-[#7fa8ce] text-lg md:text-xl">{isSignIn ? "Create one" : "Sign In"}</span>
+                        <div className="flex items-center gap-2">
+                            <span className="text-gray-100 text-lg md:text-xl">
+                                {isSignIn ? "No Account?" : "Already Have An Account?"}
+                            </span>
+
+                            <button
+                                onClick={onToggleMode}
+                                type="button"
+                                className="text-[#7fa8ce] text-lg md:text-xl cursor-pointer"
+                            >
+                                {isSignIn ? "Create one" : "Sign In"}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>

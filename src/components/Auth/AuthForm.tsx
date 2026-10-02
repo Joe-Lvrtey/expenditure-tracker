@@ -39,7 +39,6 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode, onToggleMode }) => {
         console.log("data", data)
     }
 
-
     return (
         <section className="p-5.5 md:p-y-12 md:px-20 border border-dashed lg:border-solid border-gray-200">
             <header>

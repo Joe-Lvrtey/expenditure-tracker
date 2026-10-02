@@ -29,7 +29,7 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode, onToggleMode }) => {
         path: ["confirmPassword"]
     })
 
-    const { register, handleSubmit } = useForm(mode === "sign-in" ? { resolver: zodResolver(signInschema) } : { resolver: zodResolver(signUpschema) })
+    const { register, handleSubmit } = useForm<AuthFormData>(mode === "sign-in" ? { resolver: zodResolver(signInschema) } : { resolver: zodResolver(signUpschema) })
 
     console.log(register + " this is register")
 

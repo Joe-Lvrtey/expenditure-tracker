@@ -15,8 +15,8 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode, onToggleMode }) => {
     console.log("this is the toggler: ", onToggleMode)
 
     const signInschema = z.object({
-        email: z.string().email(),
-        password: z.string().min(8),
+        email: z.email("please enter a valid email address"),
+        password: z.string().min(8, "Password should be at least 8 characters long"),
         // confirmPassword: z.string().min(8)
     })
 
@@ -29,8 +29,8 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode, onToggleMode }) => {
         path: ["confirmPassword"]
     })
 
-    const { register, handleSubmit } = useForm<AuthFormData>(mode === "sign-in" ? { resolver: zodResolver(signInschema) } : { resolver: zodResolver(signUpschema) })
-
+    const { register, handleSubmit, formState } = useForm<AuthFormData>(mode === "sign-in" ? { resolver: zodResolver(signInschema) } : { resolver: zodResolver(signUpschema) })
+    const { errors } = formState
     console.log(register + " this is register")
 
     const isSignIn = mode === "sign-in"
@@ -45,16 +45,27 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode, onToggleMode }) => {
                 <span className="tracking-wider text-[#7fa8ce] text-xl md:text-2xl">{isSignIn ? "Welcome back" : "Welcome"}</span>
                 <h2 className="text-white text-xl md:text-3xl py-4">{isSignIn ? "Sign in" : "Sign Up"}</h2>
             </header>
-            <form onSubmit={handleSubmit(submitFormData,
-                (errors) => {
-                    console.log("validation errors", errors)
-                }
-            )}>
-                <InputField {...register("email")} label="Email" type="email" />
+            <form
+                noValidate
+                onSubmit={handleSubmit(submitFormData,
+                    (errors) => {
+                        console.log("validation errors", errors)
+                    }
+                )}>
+                <InputField
+                    {...register("email", {
+                        required: "Email is required",
+                    })}
+                    label="Email"
+                    type="email"
+                />
+                <p className="text-red-500 my-2">{errors.email?.message}</p>
                 <InputField {...register("password")} label="Password" type="password" />
+                <p className="text-red-500 my-2">{errors.password?.message}</p>
                 {!isSignIn &&
                     <div className="my-4">
                         <InputField {...register("confirmPassword")} label="Confirm Password" type="password" />
+                        <p className="text-red-500 my-2">{errors.confirmPassword?.message}</p>
                     </div>}
                 {isSignIn &&
                     <div className="flex items-center justify-between my-4">

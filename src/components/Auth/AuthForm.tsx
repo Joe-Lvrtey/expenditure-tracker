@@ -21,7 +21,7 @@ const AuthForm: React.FC<AuthFormProp> = ({ mode, onToggleMode }) => {
     })
 
     const signUpschema = z.object({
-        email: z.string().email(),
+        email: z.email(),
         password: z.string().min(8),
         confirmPassword: z.string().min(8).optional()
     }).refine((data) => data.password === data.confirmPassword, {
